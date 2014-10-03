@@ -1,4 +1,4 @@
-var friendList = ["Alex", "Josh", "Steven"];
+var friendList = ["Alex", "Josh", "Steven", "Chris"];
 
 window.onload = function() {
     for(var i = 0; i < friendList.length; i++)
@@ -6,12 +6,6 @@ window.onload = function() {
         var listElement = "<li id='index" + i + "'>" + friendList[i] + " <button class='unfriend' value='" + i + "'>Unfriend</button></li>";
         $("#friendList").append(listElement);
     }
-
-    $(".unfriend").on('click', function() {
-        var index = this.value;
-        friendList.splice(index, 1);
-        removeFriend(index);
-    });
 };
 
 var addFriend = function(name) {
@@ -24,13 +18,15 @@ var removeFriend = function(index) {
 };
 
 $("#submitFriend").on('click', function() {
-    var name = $("#friendName").val();
-    friendList.push(name);
-    addFriend(name);
-    
-    $(".unfriend").on('click', function() {
+    var friendName = $.trim($("#friendName").val());
+    if(friendName.length !== 0) {
+        friendList.push(friendName);
+        addFriend(friendName);
+    }
+});
+
+$("#friendList").delegate(".unfriend", "click", function() {
         var index = this.value;
         friendList.splice(index, 1);
         removeFriend(index);
-    });
 });
